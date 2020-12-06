@@ -1,0 +1,31 @@
+﻿using System;
+using Windows.UI.Xaml;
+using Windows.UI.Xaml.Data;
+
+namespace RQuote.Converters
+{
+    public class BooleanToVisibilityConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, string language) =>
+            (Boolean.Parse(value.ToString())) ^ (parameter as string ?? string.Empty).Equals("Reverse") ?
+                Visibility.Visible : Visibility.Collapsed;
+
+        public object ConvertBack(object value, Type targetType, object parameter, string language) =>
+            (Visibility)value == Visibility.Visible ^ (parameter as string ?? string.Empty).Equals("Reverse");
+
+    }
+
+    public class DoubleToPercentConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, string language)
+        {
+            return Double.Parse(value.ToString()) + "%";
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, string language)
+        {
+            return Double.Parse(value.ToString().Replace("%",""));
+        }
+
+    }
+}

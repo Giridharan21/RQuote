@@ -1,0 +1,22 @@
+﻿<Window x:Class="RQuote.HTMLPreview"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:RQuote" 
+        xmlns:WPF="clr-namespace:Microsoft.Toolkit.Wpf.UI.Controls;assembly=Microsoft.Toolkit.Wpf.UI.Controls.WebView"
+        mc:Ignorable="d" 
+        d:DesignHeight="450" d:DesignWidth="800"
+        Width="950"
+        MaxWidth="950"
+        MinWidth="950"
+      Title="Preview">
+
+    <Grid>
+        <WPF:WebViewCompatible x:Name="webPreview" Visibility="Hidden"></WPF:WebViewCompatible>
+        <Grid x:Name="initGrid" Visibility="Visible" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center">Generating Preview. Please Wait...</TextBlock>
+            <ProgressBar x:Name="progress" IsIndeterminate="True" HorizontalAlignment="Center" VerticalAlignment="Center" Width="100" Margin="0 40 0 0"></ProgressBar>
+        </Grid>
+    </Grid>
+</Window>

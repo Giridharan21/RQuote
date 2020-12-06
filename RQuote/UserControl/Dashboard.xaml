@@ -1,0 +1,53 @@
+﻿<UserControl x:Class="RQuote.UserControl.Dashboard"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:adorners="http://gu.se/Adorners"
+             
+             xmlns:local="clr-namespace:RQuote.UserControl"
+             mc:Ignorable="d" 
+             Width="800" Height="450"
+             >
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BoolToVis"/>
+    </UserControl.Resources>
+    <Grid x:Name="startGrid" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch"  Grid.ColumnSpan="2" Margin="0,0,0,0.333">
+        <Grid.RowDefinitions>
+            <RowDefinition Height=".2*"></RowDefinition>
+            <RowDefinition Height=".8*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <TextBox Grid.Row="0" Grid.Column="1" 
+                             VerticalAlignment="Bottom"
+                             x:Name="quotationFilterTextBox"
+                          Text="{Binding FilterText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                         adorners:Watermark.TextStyle="{StaticResource AdornerTextStyle}" adorners:Watermark.Text="Search by customer name"
+                          Height="32"   FontFamily="/RQuote;component/Fonts/#Lato" HorizontalAlignment="Right" Width="200" Margin="30 0" />
+        <Grid Grid.Row="1"  Grid.Column="1" Margin="30">
+            
+            <TextBlock x:Name="TextInfo" Visibility="Hidden" FontFamily="/RQuote;component/Fonts/#Lato" Foreground="#BB5C5C5C" VerticalAlignment="Center" 
+                       HorizontalAlignment="Center" FontSize="25" TextAlignment="Center" 
+                       Margin="0,94.667,-1.266,152.667" Grid.Row="1" >
+                            No Saved Quotations
+            </TextBlock>
+            <DataGrid x:Name="QuotationGrid" RowBackground="Transparent" GridLinesVisibility="None" RowHeight="60" 
+                      CanUserResizeRows="False" Background="#FFF6F6" IsReadOnly="True" 
+                      ItemsSource="{Binding SavedQuotations}"  AutoGenerateColumns="False" 
+                      SelectionMode="Single" Style="{DynamicResource DataGridStyle1}"
+                      ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle1}" ><!--SelectionChanged="DataGrid_Selected"-->
+                <DataGrid.Columns>
+                    <DataGridTextColumn Binding="{Binding QuotationNumber}" Header="Number"
+                                        Width="1*" CellStyle="{DynamicResource CenteredRowTextStyle}"></DataGridTextColumn>
+                    <DataGridTextColumn Binding="{Binding QuotationCustomer}" Header="Customer" 
+                                        Width="2*" CellStyle="{DynamicResource CenteredRowTextStyle}"></DataGridTextColumn>
+                    <DataGridTextColumn Binding="{Binding QuotationDate}" Header="Date" Width="1*" 
+                                        CellStyle="{DynamicResource CenteredRowTextStyle}"></DataGridTextColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+    </Grid>
+
+</UserControl>

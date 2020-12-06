@@ -1,0 +1,136 @@
+﻿<Page x:Class="RQuote.LandingPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:RQuote"
+      xmlns:Custom="using:RQuote.Converters"
+      xmlns:adorners="http://gu.se/Adorners"
+      mc:Ignorable="d" d:DesignWidth="800"
+      Title="LandingPage"
+      Loaded="Page_Loaded"
+      Unloaded="Page_Unloaded">
+    <Page.Resources>
+        <BooleanToVisibilityConverter x:Key="BoolToVis"/>
+    </Page.Resources>
+    <Grid Background="#FFF9F9F9">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="60"></ColumnDefinition>
+            <ColumnDefinition ></ColumnDefinition>
+            <ColumnDefinition Width="60"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="71*"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Rectangle Fill="{DynamicResource RousingBGColor}" Grid.Row="0" Grid.ColumnSpan="2" Margin="0,98,0,0"/>
+        <Rectangle Grid.Column="2" Grid.RowSpan="2" Fill="#FFFFFF"/>
+        <Rectangle Grid.Column="0" Fill="#FFFFFF" Margin="0,274,0,0" Grid.RowSpan="2"/>
+
+        <Grid Margin="0,274,0,0" Grid.RowSpan="2">
+            <local:SpacedLabel Padding="0 20 16 8" FontFamily="/RQuote;component/Fonts/#Lato Bold" Foreground="#868686" Text="Rousing, Bangalore-37" Margin="0,61,0,10.2"/>
+        </Grid>
+
+        <Grid Grid.Row="0" Grid.Column="2" Grid.RowSpan="2">
+            <local:SpacedLabel Padding="0 14 16 0" FontFamily="/RQuote;component/Fonts/#Lato Bold" Foreground="#868686" Text="needrquote@rousing.in" Margin="0,70,0,49.2"/>
+            <Image Source="Assets/email.png" Margin="20,0,20,24.8" Height="20" VerticalAlignment="Bottom"/>
+        </Grid>
+
+        <Grid Grid.Column="1" Grid.RowSpan="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="60"></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid HorizontalAlignment="Right" Margin="0 0 75 0" Width="190">
+                <Image Source="/Assets/headerLogo.png" Margin="62,20,-61,-20"/>
+                <!--<Rectangle Height="20" VerticalAlignment="Top" Fill="{StaticResource RousingThemeBlueColor}"/>
+                <StackPanel VerticalAlignment="Bottom" HorizontalAlignment="Center">
+                    <Label Foreground="#FF5C5C5C" FontSize="22" FontFamily="/RQuote;component/Fonts/#Lato Black" HorizontalAlignment="Center">RQUOTE</Label>
+                    <Label x:Name="label" Foreground="#FF5C5C5C" FontFamily="/RQuote;component/Fonts/#Lato" FontSize="12" Margin="0 -15 0 0" HorizontalAlignment="Center">rquote.rousing.in</Label>
+                </StackPanel>-->
+            </Grid>
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width=".8*"/>
+                    <ColumnDefinition Width=".2*"/>
+                </Grid.ColumnDefinitions>
+                <Grid x:Name="CustomerIdGrid" VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="Visible" Margin="190,66,61.329,115.333">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0" Margin="0,10" HorizontalAlignment="Center" FontFamily="/RQuote;component/Fonts/#Lato">Enter your showroom code</TextBlock>
+                    <TextBox TextChanged="ShowroomCode_TextChanged" x:Name="ShowroomCode" Grid.Row="1" Margin="0,10" MinWidth="350" FontFamily="/RQuote;component/Fonts/#Lato"></TextBox>
+                    <Grid x:Name="GridUserVerify" Grid.Row="2" Visibility="Collapsed">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height=".25*" />
+                            <RowDefinition Height=".25*" />
+                            <RowDefinition Height=".25*" />
+                            <RowDefinition Height=".25*" />
+                            
+                        </Grid.RowDefinitions>
+                        <TextBlock Grid.Row="0" Margin="0,10" HorizontalAlignment="Center" FontFamily="/RQuote;component/Fonts/#Lato">Select Username</TextBlock>
+                        <ComboBox x:Name="Username" Grid.Row="1" Text="Select a User" Margin="0,10"  FontFamily="/RQuote;component/Fonts/#Lato"></ComboBox>
+                        <TextBlock Grid.Row="2" Margin="0,10" HorizontalAlignment="Center" FontFamily="/RQuote;component/Fonts/#Lato">Enter your Password</TextBlock>
+                        <TextBox x:Name="Password" Grid.Row="3" Margin="0,10"  FontFamily="/RQuote;component/Fonts/#Lato"></TextBox>
+
+                    </Grid>
+                    <Button x:Name="SelectBtn" Click="SelectShowroom" Grid.Row="3" Margin="0 10" HorizontalAlignment="Center" Padding="15 5" FontFamily="/RQuote;component/Fonts/#Lato" Style="{DynamicResource PillButton}">Select</Button>
+                    <Button Click="Login" x:Name="LoginBtn" Visibility="Collapsed" Grid.Row="3" Margin="0 10" HorizontalAlignment="Center" Padding="15 5" FontFamily="/RQuote;component/Fonts/#Lato" Style="{DynamicResource PillButton}">Login</Button>
+                </Grid>
+                
+                <Grid x:Name="initGrid"  HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Collapsed" Margin="340,157,211.329,156.333">
+                    <Grid.RowDefinitions>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <TextBlock x:Name="initTextBlock" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="0" Margin="0 0 0 10" FontFamily="/RQuote;component/Fonts/#Lato">Please wait...</TextBlock>
+                    <ProgressBar IsIndeterminate="True" HorizontalAlignment="Center" VerticalAlignment="Center" Width="100" Grid.Row="1"></ProgressBar>
+                    <TextBlock Grid.Row="2" Margin="0 10 0 0" TextAlignment="Center" FontFamily="/RQuote;component/Fonts/#Lato"><!--Downloaded--> <!--<Run Text="{Binding DownloadedFiles}"></Run> of <Run Text="{Binding TotalFiles}"></Run>--> <!--files--></TextBlock>
+                </Grid>
+                
+                
+                <Grid x:Name="startGrid" HorizontalAlignment="Stretch" Visibility="Collapsed" VerticalAlignment="Stretch"  Grid.ColumnSpan="2" Margin="0,0,0,0.333">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="78"></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="0.4*"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Button Grid.Row="1" Grid.Column="0" Click="StartButton_Click" Width="150" Height="41" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,31.6,22.4,0" Style="{DynamicResource PillButton}">Create New rQuote</Button>
+                    <Button Grid.Row="1" Grid.Column="0" Content="Refresh Catalogues" Height="40" VerticalAlignment="Top" Margin="0,91.6,22.4,0" Click="Sync_Button_Click" Style="{DynamicResource PillButton}" HorizontalAlignment="Right" Width="150"/>
+                    <Button Grid.Row="1" Grid.Column="0" Content="Add Custom Product" Width="150" Height="40" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,154.6,22.4,0" Click="newProductButton_Click" Style="{DynamicResource PillButton}"/>
+                    <TextBox Grid.Row="0" Grid.Column="1"
+                             VerticalContentAlignment="Center"
+                             x:Name="quotationFilterTextBox"
+                         Margin="0,56,27,0" Text="{Binding FilterText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                         adorners:Watermark.TextStyle="{StaticResource AdornerTextStyle}" adorners:Watermark.Text="Search by customer name"
+                         Visibility="{Binding HasSavedQuotations, Converter={StaticResource BoolToVis}}" Height="32" VerticalAlignment="Top" Grid.RowSpan="2" FontFamily="/RQuote;component/Fonts/#Lato" HorizontalAlignment="Right" Width="163" />
+                    
+                    <Grid Grid.Row="1" Margin="9.6,9.6,0,0" Grid.Column="1">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="29*"/>
+                            <RowDefinition Height="0*"/>
+                            <RowDefinition Height="110*"/>
+                        </Grid.RowDefinitions>
+                        <TextBlock FontFamily="/RQuote;component/Fonts/#Lato" Foreground="#BB5C5C5C" VerticalAlignment="Center" HorizontalAlignment="Stretch" FontSize="25" TextAlignment="Center" Visibility="{Binding ShouldShowNewQuotations, Converter={StaticResource BoolToVis}}" Margin="0,66,-0.6,124" Grid.Row="1" Grid.RowSpan="2">
+                            <Run>No Saved Quotations</Run>
+                        </TextBlock>
+                        <DataGrid RowBackground="Transparent" GridLinesVisibility="None" RowHeight="60" CanUserResizeRows="False" Background="#FFF6F6" Margin="10,19,23.4,6" IsReadOnly="True" ItemsSource="{Binding SavedQuotations}" Visibility="{Binding HasSavedQuotations, Converter={StaticResource BoolToVis}}" AutoGenerateColumns="False" SelectionChanged="DataGrid_Selected" SelectionMode="Single" Style="{DynamicResource DataGridStyle1}" ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle1}" Grid.RowSpan="3">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Binding="{Binding QuotationNumber}" Header="Number" Width="2*" CellStyle="{DynamicResource CenteredRowTextStyle}"></DataGridTextColumn>
+                                <DataGridTextColumn Binding="{Binding QuotationCustomer}" Header="Customer" Width="3*" CellStyle="{DynamicResource CenteredRowTextStyle}"></DataGridTextColumn>
+                                <DataGridTextColumn Binding="{Binding QuotationDate}" Header="Date" Width="1*" CellStyle="{DynamicResource CenteredRowTextStyle}"></DataGridTextColumn>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Grid>
+                </Grid>
+            </Grid>
+        </Grid>
+    </Grid>
+</Page>
