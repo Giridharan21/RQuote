@@ -1,5 +1,6 @@
 ﻿using ClosedXML.Excel;
-using RQuote.Data.Tables;
+using RQuote.Server;
+using RQuote.Server.Tables;
 
 
 //using DocumentFormat.OpenXml.Packaging;
@@ -49,28 +50,35 @@ namespace RQuote.Logic
             using (var WorkBook = new XLWorkbook(FilePath))
             {
                 IXLWorksheet Worksheet = WorkBook.Worksheet(1);
-                var rows = Worksheet.RowsUsed().Skip(5000);
+                var rows = Worksheet.RowsUsed().Skip(4611);
+                Console.WriteLine(rows.Count()); 
+                int nu = 0;
                 foreach (var row in rows)
                 {
+                    //Console.WriteLine(++nu);
                     var product = new Products();
                     try
                     {
-                        string model = row.Cell("C")?.Value.ToString()??"";
+                        string model = row.Cell("C")?.Value.ToString()??"".Trim();
                         string catalogue = row.Cell("AT")?.Value.ToString()??"100";
                         double.TryParse(row.Cell("P")?.Value.ToString(), out double price);
-                        product.ModelNo = model;
-                        product.CatalogueId = Convert.ToInt32(catalogue) + 8;
+                        product.ModelNo = model.Trim();
+                        product.CatalogueId = Convert.ToInt32(catalogue);
                         product.Price = price;
                         var details = row.CellsUsed().Count()==0?new List<string>(): row.CellsUsed().Select(i => ColumnNames[i.WorksheetColumn().ColumnLetter()] + " : " + i.Value.ToString());
                         product.Details = details.Count()==0?"": string.Join("; ",details);
                         product.Image = new byte[0];
+                        product.CreatedById = 3;
+                        product.Uploaded = true;
                         if (model != "" && catalogue != "")
-                            product.Image = ImageAsByteArr(model.Trim(), catalogue);
+                            product.Image = ImageAsByteArr(string.Join("",model.Trim().Where(i => i != '!')), catalogue);
+                        if (products.Select(i => i.ModelNo).Contains(model))
+                            product.ModelNo += "!";
                         products.Add(product);
                     }
                     catch (Exception ex)
                     {
-                        Console.WriteLine(ex.Message);
+                        throw ex;
                     }
                     //foreach (var cell in row.CellsUsed())
                     //{
@@ -80,6 +88,29 @@ namespace RQuote.Logic
                 }
             }
             return products;
+        }
+        public async Task AddProducts(List<Products> products)
+        {
+            var context = new ServerDbContext();
+            context.Configuration.AutoDetectChangesEnabled = false;
+            int count = 0;
+            foreach (var x in products)
+            {
+                count++;
+                context.Set<Products>().Add(x);
+                if(count%10==0)
+                {
+                    await context.SaveChangesAsync();
+                    Console.WriteLine(count);
+                }
+                if(count % 50 == 0)
+                {
+                    context = new ServerDbContext();
+                    context.Configuration.AutoDetectChangesEnabled = false;
+                }
+            }
+            
+            await context.SaveChangesAsync();
         }
         public List<string> GetProductDetails()
         {
@@ -186,6 +217,34 @@ namespace RQuote.Logic
                     break;
             }
             return byteArr;
+        }
+        public class ShowroomModel
+        {
+            public string Name { get; set; }
+            public string Code { get; set; }
+            public string Address { get; set; }
+            public string BankDetails { get; set; }
+            public string TermsAndConditions { get; set; }
+            public byte[] ShowroomImage { get; set; }
+            public List<int> Catalogues { get; set; }
+            public List<int> Users { get; set; }
+        }
+        public void AddShowRoom(ShowroomModel model)
+        {
+            var context = new ServerDbContext();
+            var showroom = new Showrooms
+            {
+                Address = model.Address,
+                BankDetails = model.BankDetails,
+                Catalogues = context.Catalogues.Where(i => model.Catalogues.Contains(i.Id)).ToList(),
+                Code = model.Code,
+                Name = model.Name,
+                ShowroomImage = model.ShowroomImage,
+                TermsAndConditions = model.TermsAndConditions,
+                Users = context.Users.Where(i => model.Users.Contains(i.Id)).ToList(),
+            };
+            context.Showrooms.Add(showroom);
+            context.SaveChanges();
         }
         public List<string> GetRowsValues()
         {

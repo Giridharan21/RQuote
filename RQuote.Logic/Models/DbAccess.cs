@@ -1,5 +1,5 @@
-﻿using RQuote.Data;
-using RQuote.Data.Tables;
+﻿
+using RQuote.Server;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -11,10 +11,10 @@ namespace RQuote.Logic.Models
 {
     public class DbAccess
     {
-        private QuotationAppDb DbContext;
+        private ServerDbContext DbContext;
         public DbAccess()
         {
-            DbContext = new QuotationAppDb();
+            DbContext = new ServerDbContext();
         }
 
         public async Task<List<string>> GetUsersForShowRoom(string ShowroomCode)

@@ -80,13 +80,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\RQuote.Data\RQuote.Data.csproj">
-      <Project>{49b22769-d35f-43c1-a43f-0a028ba79002}</Project>
-      <Name>RQuote.Data</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\RQuote.Server.Version2\RQuote.Server.Version2.csproj">
-      <Project>{577E2761-136E-41F7-AE4C-152E07424EFE}</Project>
-      <Name>RQuote.Server.Version2</Name>
+    <ProjectReference Include="..\..\..\..\source\repos\RQuote Quotation Application\RQuote.Server\RQuote.Server.csproj">
+      <Project>{f3725f34-1421-41b1-b6cc-7cd4076d66ce}</Project>
+      <Name>RQuote.Server</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
